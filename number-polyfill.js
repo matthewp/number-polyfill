@@ -133,29 +133,29 @@
 
   var allInputs = Array.prototype.slice.call(document.querySelectorAll('input[type="number"]'));
   allInputs.forEach(function(elem) {
-    var halfHeight = (elem.outerHeight / 2) + 'px';
+    var halfHeight = (elem.offsetHeight / 2) + 'px';
     var upBtn = document.createElement('div'),
-        addClass = upBtn.classList.add;
+        cl = upBtn.classList;
 
-    addClass('number-spin-btn');
-    addClass('number-spin-btn-up');
+    cl.add('number-spin-btn');
+    cl.add('number-spin-btn-up');
     upBtn.style.height = halfHeight;
 
     var downBtn = document.createElement('div');
-    addClass = downBtn.classList.add;
+    cl = downBtn.classList;
 
-    addClass('number-spin-btn');
-    addClass('number-spin-btn-down');
+    cl.add('number-spin-btn');
+    cl.add('number-spin-btn-down');
     downBtn.style.height = halfHeight;
 
     var btnContainer = document.createElement('div');
-    addClass = btnContainer.classList.add;
+    cl = btnContainer.classList;
 
     btnContainer.appendChild(upBtn);
     btnContainer.appendChild(downBtn);
-    addClass('number-spin-btn-container');
+    cl.add('number-spin-btn-container');
 
-    btnContainer.parentNode.insertBefore(elem, btnContainer.nextSibling);
+    elem.parentNode.insertBefore(btnContainer, elem.nextSibling);
 
     var elemEvents = {
       DOMMouseScroll: function(event) {
@@ -247,7 +247,7 @@
         var releaseFunc = function(event) {
           window.clearTimeout(elem.timeoutID);
 
-          document.removeEventListner('mouseup', releaseFunc);
+          document.removeEventListener('mouseup', releaseFunc);
           downBtn.removeEventListener('mouseleave', releaseFunc);
         };
 
@@ -265,5 +265,6 @@
     });
 
     elem.style.textAlign = 'right';
+    elem.value = elem.value; // This causes the value to be refreshed and aligned right.
   });
 })();
